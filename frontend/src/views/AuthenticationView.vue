@@ -29,7 +29,7 @@ const handleSubmit = async () => {
             password.value = '';
         } else {
             localStorage.setItem('user', JSON.stringify(data.user));
-            router.push('/about');
+            router.push('/scene');
         }
     } catch (err) {
         error.value = err.message;
