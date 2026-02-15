@@ -27,10 +27,28 @@ const isLargePlate = computed(() => width.value > 160 || depth.value > 100)
 const thinDisabled = computed(() => isLargePlate.value)
 
 const textureOptions = [
-  { id: 'none', name: 'Keine' },
-  { id: 'smooth', name: 'Glatt' },
-  { id: 'rough', name: 'Rau' },
-  { id: 'grain', name: 'Maserung' },
+  { id: 'none', name: '--- Keine Struktur (Uni-Farbe) ---' },
+    { id: 'oak_natural', name: 'Eiche Natur' },
+    { id: 'oak_dark', name: 'Eiche Dunkel' },
+    { id: 'walnut', name: 'Nussbaum' },
+    { id: 'cherry', name: 'Kirschbaum' },
+    { id: 'beech', name: 'Buche' },
+    { id: 'maple', name: 'Ahorn' },
+    { id: 'pine', name: 'Kiefer' },
+    { id: 'teak', name: 'Teak' },
+    { id: 'ash', name: 'Esche' },
+    { id: 'mahogany', name: 'Mahagoni' },
+    { id: 'birch', name: 'Birke' },
+    { id: 'plywood', name: 'Sperrholz' },
+    { id: 'concrete_light', name: 'Lärche' },
+    { id: 'concrete_dark', name: 'Douglasie' },
+    { id: 'marble_white', name: 'Zeder' },
+    { id: 'marble_black', name: 'Ulme' },
+    { id: 'granite', name: 'Robinie' },
+    { id: 'slate', name: 'Kastanie' },
+    { id: 'rust', name: 'Akazie' },
+    { id: 'carbon', name: 'Olivenholz' },
+    { id: 'leather', name: 'Ebenholz' }
 ]
 
 function onPlateShapeChange(e) {
