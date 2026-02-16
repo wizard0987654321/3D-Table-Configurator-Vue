@@ -13,10 +13,17 @@ const router = createRouter({
     {
       path: '/scene',
       name: 'scene',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
       component: () => import('../views/SceneView.vue'),
+    },
+    {
+      path: '/saved-configurations',
+      name: 'saved-configurations',
+      component: () => import('../views/SavedConfigurationsView.vue'),
+    },
+    {
+      path: '/checkout',
+      name: 'checkout',
+      component: () => import('../views/CheckoutView.vue'),
     },
   ],
 })

@@ -1,5 +1,5 @@
 <script setup>
-import { computed, watch, shallowRef } from 'vue'
+import { computed, ref, watch, shallowRef } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useConfiguratorStore } from '../stores/configurator'
 import { TextureLoader, RepeatWrapping } from 'three'
@@ -14,16 +14,19 @@ const {
 // --- DYNAMIC TEXTURE LOADING ---
 const textureLoader = new TextureLoader()
 const loadedTexture = shallowRef(null)
+const loadedTextureId = ref('none')
 
 watch(topTexture, (val) => {
   if (val === 'none') {
     loadedTexture.value = null
+    loadedTextureId.value = 'none'
     return
   }
   textureLoader.load(`/textures/${val}.jpg`, (tex) => {
     tex.wrapS = tex.wrapT = RepeatWrapping
     tex.repeat.set(1, 1)
     loadedTexture.value = tex
+    loadedTextureId.value = val
   })
 }, { immediate: true })
 
@@ -93,7 +96,7 @@ const uFrameSides = computed(() => [-frameX.value, frameX.value])
 const pedestalBaseRadius = computed(() => Math.min(halfW.value, halfD.value) * 0.6)
 
 // Material key to force re-creation when material type or texture changes
-const topMaterialKey = computed(() => `${topMaterial.value}-${topTexture.value}`)
+const topMaterialKey = computed(() => `${topMaterial.value}-${loadedTextureId.value}`)
 </script>
 
 <template>

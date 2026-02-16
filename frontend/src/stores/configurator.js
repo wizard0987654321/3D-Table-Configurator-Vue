@@ -66,7 +66,13 @@ export const useConfiguratorStore = defineStore('configurator', () => {
 
   // 6. Action: Save to Database
   async function saveConfiguration() {
-    const userId = localStorage.getItem('userId')
+    let userId = localStorage.getItem('userId')
+    if (!userId) {
+      const userJson = localStorage.getItem('user')
+      if (userJson) {
+        try { userId = JSON.parse(userJson).id } catch (e) { /* ignore */ }
+      }
+    }
 
     if (!userId) {
       alert('Please log in to save your design!')

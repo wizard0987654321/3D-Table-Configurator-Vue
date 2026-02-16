@@ -201,11 +201,11 @@ function onWidthChange(e) {
     <div class="price">Preis: {{ price }} €</div>
 
     <div class="actions">
-      <button class="save-btn" @click="store.saveConfiguration">
+      <button class="save-btn" @click="() => store.saveConfiguration()">
         {{ editingId ? 'Als neue Kopie speichern' : 'Konfiguration speichern' }}
       </button>
 
-      <button v-if="editingId" class="update-btn" @click="store.updateConfiguration">
+      <button v-if="editingId" class="update-btn" @click="() => store.updateConfiguration()">
         Änderungen speichern
       </button>
     </div>
