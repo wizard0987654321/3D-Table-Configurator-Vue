@@ -115,7 +115,7 @@ function handleNewTable() {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 900px;
+  max-width: 80vw;
   margin: 0 auto 30px;
 }
 
@@ -152,7 +152,7 @@ function handleNewTable() {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
-  max-width: 900px;
+  max-width: 80vw;
   margin: 0 auto;
 }
 </style>
