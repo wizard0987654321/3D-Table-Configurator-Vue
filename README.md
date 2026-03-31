@@ -5,9 +5,43 @@ Wevbframeworks Project, Vue version
 
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+1. Prerequisites
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+Install Node.js
+
+Install Git
+
+
+
+2. Clone the Repository
+
+Clone the project from GitLab:
+
+git clone https://git.thm.de/gsbs28/webframeworksvue.git
+cd webframeworksVue
+
+
+
+The .env file is already included in the repository for testing purposes — no need to create it manually.
+
+
+3. Backend Setup
+
+Navigate to the backend folder: cd backend
+
+Install dependencies: npm install
+
+The .env file is already included in the repository — it contains the necessary database configuration for local development.
+Start the backend server: node server.js
+
+
+
+4. Frontend Setup
+
+Navigate to the configurator folder: cd frontend
+Install dependencies: npm install
+
+Start the development server: npm run dev
 
 ## Add your files
 
