@@ -7,13 +7,14 @@ const isRegistering = ref(false);
 const username = ref('');
 const password = ref('');
 const error = ref('');
+const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const handleSubmit = async () => {
     error.value = '';
     const endpoint = isRegistering.value ? '/api/register' : '/api/login';
     
     try {
-        const response = await fetch(`http://localhost:3000${endpoint}`, {
+        const response = await fetch(`${apiBase}${endpoint}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ username: username.value, password: password.value }),

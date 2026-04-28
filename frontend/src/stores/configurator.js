@@ -1,6 +1,8 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 
+const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000'
+
 export const useConfiguratorStore = defineStore('configurator', () => {
   // id to identify if we are in editing mode
   const editingId = ref(null)
@@ -97,7 +99,7 @@ export const useConfiguratorStore = defineStore('configurator', () => {
     }
 
     try {
-      const response = await fetch('http://localhost:3000/api/save-config', {
+      const response = await fetch(`${apiBase}/api/save-config`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
@@ -166,7 +168,7 @@ export const useConfiguratorStore = defineStore('configurator', () => {
     }
 
     try {
-      const response = await fetch(`http://localhost:3000/api/update-config/${editingId.value}`, {
+      const response = await fetch(`${apiBase}/api/update-config/${editingId.value}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),

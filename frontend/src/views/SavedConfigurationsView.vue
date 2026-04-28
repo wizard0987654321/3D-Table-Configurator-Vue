@@ -9,6 +9,7 @@ const store = useConfiguratorStore()
 
 const configs = ref([])
 const loading = ref(true)
+const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 function getUserId() {
   let userId = localStorage.getItem('userId')
@@ -30,7 +31,7 @@ onMounted(async () => {
   }
 
   try {
-    const response = await fetch(`http://localhost:3000/api/user-configs/${userId}`)
+    const response = await fetch(`${apiBase}/api/user-configs/${userId}`)
     const data = await response.json()
     configs.value = data
   } catch (error) {
@@ -55,7 +56,7 @@ async function handleDelete(configId) {
   if (!window.confirm('Möchten Sie diese Konfiguration wirklich löschen?')) return
 
   try {
-    const response = await fetch(`http://localhost:3000/api/delete-config/${configId}`, {
+    const response = await fetch(`${apiBase}/api/delete-config/${configId}`, {
       method: 'DELETE',
     })
 

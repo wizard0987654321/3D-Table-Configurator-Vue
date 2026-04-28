@@ -27,6 +27,7 @@ onMounted(() => {
 const inputCode = ref('')
 const discountPercent = ref(0)
 const statusMessage = ref('')
+const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000'
 
 const finalPrice = computed(() =>
   Math.round(price.value * (1 - discountPercent.value / 100))
@@ -47,7 +48,7 @@ async function handleApplyDiscount() {
   if (!inputCode.value) return
 
   try {
-    const response = await fetch('http://localhost:3000/api/validate-code', {
+    const response = await fetch(`${apiBase}/api/validate-code`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ code: inputCode.value }),
