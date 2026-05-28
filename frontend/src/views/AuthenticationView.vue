@@ -1,41 +1,46 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
+import AuthLoading from '../components/AuthLoading.vue';
 
 const router = useRouter();
 const isRegistering = ref(false);
 const username = ref('');
 const password = ref('');
 const error = ref('');
+const isLoading = ref(false);
 const apiBase = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const handleSubmit = async () => {
-    error.value = '';
-    const endpoint = isRegistering.value ? '/api/register' : '/api/login';
+  error.value = '';
+  isLoading.value = true;
+  const endpoint = isRegistering.value ? '/api/register' : '/api/login';
     
-    try {
-        const response = await fetch(`${apiBase}${endpoint}`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username: username.value, password: password.value }),
-        });
+  try {
+    const response = await fetch(`${apiBase}${endpoint}`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username: username.value, password: password.value }),
+    });
 
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.error || 'Fehler beim Authentifizieren');
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.error || 'Fehler beim Authentifizieren');
 
-        if (isRegistering.value) {
-            alert("Erfolgreich registriert! Du kannst dich jetzt anmelden.");
-            isRegistering.value = false;
-            username.value = '';
-            password.value = '';
-        } else {
-            localStorage.setItem('user', JSON.stringify(data.user));
-            localStorage.setItem('userId', data.user.id);
-            router.push('/scene');
-        }
-    } catch (err) {
-        error.value = err.message;
+    if (isRegistering.value) {
+      alert("Erfolgreich registriert! Du kannst dich jetzt anmelden.");
+      isRegistering.value = false;
+      username.value = '';
+      password.value = '';
+    } else {
+      localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem('userId', data.user.id);
+      router.push('/scene');
     }
+  } catch (err) {
+    error.value = err.message;
+  } finally {
+    isLoading.value = false;
+  }
 };
 </script>
 
@@ -45,11 +50,12 @@ const handleSubmit = async () => {
             <h1 class="auth-title">Konfigurator</h1>
             <h3 class="auth-subtitle">{{ isRegistering ? 'Konto erstellen' : 'Anmelden' }}</h3>
             
-            <form @submit.prevent="handleSubmit" class="auth-form">
-                <input v-model="username" type="text" placeholder="Benutzername" required class="auth-input">
-                <input v-model="password" type="password" placeholder="Passwort" required class="auth-input">
-                <div v-if="error" class="auth-error">{{ error }}</div>
-                <button type="submit" class="auth-button">
+            <form @submit.prevent="handleSubmit" class="auth-form" :aria-busy="isLoading">
+              <input v-model="username" type="text" placeholder="Benutzername" required class="auth-input" :disabled="isLoading">
+              <input v-model="password" type="password" placeholder="Passwort" required class="auth-input" :disabled="isLoading">
+              <div v-if="error" class="auth-error">{{ error }}</div>
+              <AuthLoading v-if="isLoading" />
+              <button type="submit" class="auth-button" :disabled="isLoading">
                     {{ isRegistering ? 'Registrieren' : 'Anmelden' }}
                 </button>
             </form>
@@ -127,6 +133,11 @@ const handleSubmit = async () => {
   background: rgba(110, 172, 218, 0.2);
 }
 
+.auth-input:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
 .auth-error {
   color: #ff6b6b;
   font-size: 0.85rem;
@@ -154,6 +165,12 @@ const handleSubmit = async () => {
 
 .auth-button:active {
   transform: scale(0.98);
+}
+
+.auth-button:disabled {
+  background: rgba(110, 172, 218, 0.6);
+  cursor: not-allowed;
+  transform: none;
 }
 
 .auth-toggle-text {
